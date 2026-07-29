@@ -1,0 +1,27 @@
+# 시스템
+.DS_Store
+
+# 테스트/임시
+test*.json
+musinsa_source.txt
+
+# 백업
+fashion_mcp_server_csv_backup.py
+
+# 대용량 데이터
+ga_log_data.csv
+
+# 대용량 바이너리 (실수 방지)
+*.pt
+*.zip
+*.png
+*.jpg
+*.pdf
+
+# 파이썬
+__pycache__/
+*.pyc
+
+# 인증/비밀
+*.env
+service-account*.json
