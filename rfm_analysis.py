@@ -90,7 +90,7 @@ axes[1,1].axvline(x=9, color='orange', linestyle='--', label='우수 기준(9점
 axes[1,1].legend()
 
 plt.tight_layout()
-plt.savefig('/home/claude/rfm_dashboard.png', dpi=150, bbox_inches='tight')
+plt.savefig('rfm_dashboard.png', dpi=150, bbox_inches='tight')
 plt.close()
 print("\n✅ RFM 대시보드 저장 완료: rfm_dashboard.png")
 
@@ -122,7 +122,7 @@ ax.set_xlabel('중요도')
 for i, v in enumerate(importances.sort_values().values):
     ax.text(v + 0.001, i, f'{v:.3f}', va='center', fontweight='bold')
 plt.tight_layout()
-plt.savefig('/home/claude/feature_importance.png', dpi=150, bbox_inches='tight')
+plt.savefig('feature_importance.png', dpi=150, bbox_inches='tight')
 plt.close()
 print("\n변수 중요도 차트 저장 완료: feature_importance.png")
 
@@ -137,5 +137,5 @@ summary = rfm.groupby('등급').agg(
     평균_구매금액=('Monetary','mean')
 ).round(2)
 print(summary)
-summary.to_csv('/home/claude/rfm_summary.csv', encoding='utf-8-sig')
+summary.to_csv('rfm_summary.csv', encoding='utf-8-sig')
 print("\n요약 데이터 저장 완료: rfm_summary.csv")

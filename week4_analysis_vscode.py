@@ -142,6 +142,8 @@ xgb_model = xgb.XGBClassifier(
     subsample=0.8, colsample_bytree=0.8, random_state=42,
     eval_metric='mlogloss', early_stopping_rounds=20, verbosity=0
 )
+# 주의: 조기 종료 기준(eval_set)에 테스트 세트를 쓰고 있어 아래 XGBoost 정확도는 낙관적이다.
+#       엄밀히 하려면 학습 세트에서 검증 세트를 따로 떼어 eval_set 으로 넘겨야 한다. (README 한계 참고)
 xgb_model.fit(X_train, y_train_enc, eval_set=[(X_test, y_test_enc)], verbose=False)
 xgb_pred = le_grade.inverse_transform(xgb_model.predict(X_test))
 xgb_acc  = accuracy_score(y_test, xgb_pred)

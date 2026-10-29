@@ -72,6 +72,17 @@ Claude Desktop에서 자연어로 질문하면, Claude가 아래 툴을 호출�
 
 ---
 
+## 데이터 파일
+
+| 파일 | 레포 포함 | 내용 |
+|---|---|---|
+| `musinsa_ranking_data.csv` | O | 무신사 랭킹 수집 결과 (rank, product_id, brand_name, product_name, original_price, discount_price, discount_rate, date) |
+| `holiday_api_data.csv` | O | 공휴일 API 수집 결과 (date, holiday_name, is_holiday) |
+| `ga_log_data.csv` | X (용량) | GA 기반 고객 행동 데이터 9,996행. 컬럼: fullVisitorId, RFMScore, LastVisitedDays, NumberOfTransactions, OrderedAmount, pageviews, medium, browser, operatingSystem, isMobile. `reload_to_bq.py`·`week4_analysis_vscode.py` 입력 |
+| `bq_rfm_data.csv` | X | `ga_log_data`에서 fullVisitorId, last_visit_date(YYYYMMDD), frequency, monetary 를 뽑은 집계. `rfm_analysis.py` 입력 |
+
+포함하지 않은 두 파일은 실제 무신사 고객이 아니라 공개 GA 데이터를 프록시로 쓴 것입니다. 스크립트는 같은 폴더에 두 파일이 있다고 가정합니다.
+
 ## 실행 방법
 
 ### 1. 의존성 설치
@@ -142,3 +153,4 @@ holiday_api_data.csv        # 공휴일 데이터 (재현용)
 - **라벨-피처 순환성** — 등급 라벨과 예측 피처 사이의 순환 구조. 타겟을 미래 실제 행동(재구매·이탈)으로 재정의하는 것이 근본 개선 방향입니다.
 - **MCP는 읽기 전용** — 현재 조회·집계 중심이며 분석·예측 툴은 로드맵 단계입니다.
 - **데이터 만료** — BigQuery 샌드박스 데이터는 60일 후 만료되므로, `reload_to_bq.py`로 재적재해 복구합니다.
+- **XGBoost 조기 종료가 테스트 세트를 봄** — `week4_analysis_vscode.py`의 `eval_set`이 테스트 세트라 XGBoost 95.4%는 낙관적인 값입니다. 학습 세트에서 검증 세트를 따로 떼는 것이 맞으며, RF 수치에는 영향이 없습니다.
